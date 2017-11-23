@@ -1,0 +1,200 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+.continor{
+	display: flex;
+	height: 100%;
+}
+
+.rightMenu{
+	width: 75%;
+	height: 100%;
+}
+.charts{
+	position: absolute;
+	height: 300px;
+	width: 75%;
+	bottom: 0px;
+}
+/*登陆注册*/
+.mask{
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0px;
+}
+.maskBg{
+	height: 100%;
+	width: 100%;
+	background-color: #222;
+	position: fixed;
+	top: 0px;
+}
+.login,.regsiter{
+	position: absolute;
+	height: 75%;
+	width: 30%;
+	top: 12.5%;
+	left: 35%;
+	background-color: #fff;
+	border-radius: 8px;
+	display: none;
+	text-align: center;
+}
+@keyframes hideDiv{
+	from{
+		left: 35.5%;
+		opacity: 1;
+	}
+	to{
+		left: 45%;
+		opacity: 0;
+	}
+}
+@-webkit-keyframes hideDiv{
+	from{
+		left: 35.5%;
+		opacity: 1;
+	}
+	to{
+		left: 45%;
+		opacity: 0;
+	}
+}
+@keyframes closeMask{
+	from{
+		top: 1%;
+		opacity: 1;
+	}
+	to{
+		top: -25%;
+		opacity: 0;
+	}
+}
+@-webkit-keyframes closeMask{
+	from{
+		top: 1%;
+	}
+	to{
+		top: -25%;
+	}
+}
+@keyframes closeMaskItem{
+	from{
+		bottom: 12.5%;
+		opacity: 1;
+	}
+	to{
+		bottom: -12.5%;
+		opacity: 0;
+	}
+}
+@-webkit-keyframes closeMaskItem{
+	from{
+		bottom: 12.5%;
+		opacity: 1;
+	}
+	to{
+		bottom: -12.5%;
+		opacity: 0;
+	}
+}
+.closeMaskItem{
+	animation: closeMaskItem 500ms;
+	-webkit-animation: closeMaskItem 500ms;
+}
+.hideThisDiv{
+	animation: hideDiv 500ms;
+	-webkit-animation: hideDiv 500ms;
+}
+.maskClose{
+	animation: closeMask 500ms;
+	-webkit-animation: closeMask 500ms;
+}
+.maskItemActive{
+	display: block;
+}
+.maskItemActive h1{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(50,50,50,.35);
+}
+.info{
+	border: 1px solid rgba(50,50,50,.35);
+	width: 280px;
+	height: 44px;
+	border-radius: 8px;
+	padding-left: 10px;
+	margin-top: 4%;
+}
+.info:focus{
+	box-shadow:0px 0px 5px #3395FF;
+	border: 0px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.infoButton:active{
+	background-color: #5DA0C6;
+	box-shadow: 0px 0px 10px #3395FF inset;
+}
+.infoButton{
+	outline: none;
+	width: 280px;
+	height: 44px;
+	border: 0px;
+	border-radius: 8px;
+	color: #FFFFFF;
+	margin-top: 4%;
+}
+.linkBox{
+	margin-top: 4%;
+	width: 100%;
+}
+.logo{
+	text-align: center;
+	padding: 10px;
+	width: 100%;
+}
+/*左侧菜单*/
+.leftMenu{
+	width: 25%;
+	height: 100%;
+	position: relative;
+	background-color: #222222;
+	color:#fff;
+	text-align: center;
+}
+.userHeader{
+ 	height:40%;
+ 	display: flex;
+ 	justify-content: center;
+	align-items: center;
+}
+.userName{
+	width: 100%;
+	text-align: center;
+}
+.leftMenu .linkBox{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+}
+.recorderButton button{
+	width: 70%;
+	height: 44px;
+	margin-top: 4%;
+}
+#log{
+	margin: 0 auto;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	max-height: 200px;
+	overflow-y: scroll;
+}
+#recordingslist{
+	max-height: 150px;
+	overflow-y: auto;
+}
+

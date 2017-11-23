@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Live input record and playback</title>
+		<style type='text/css'>
+			ul {
+				list-style: none;
+			}
+			
+			#recordingslist audio {
+				display: block;
+				margin-bottom: 10px;
+			}
+		</style>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/bootstrap.css" />
+	</head>
+
+	<body>
+		<!--<button onclick="init(this)">初始化</button>
+		<button onclick="startRecording(this);">开始录音</button>
+		<button onclick="stopRecording(this);" disabled>停止</button>
+
+		<h2>Recordings</h2>
+		<ul id="recordingslist"></ul>
+
+		<h2>Log</h2>
+		<pre id="log"></pre>-->
+		<div class="continor">
+			<div class="leftMenu">
+				<div class="userHeader">
+					<img src="img/125.png" /><br />
+				</div>
+				<p class="userName">用户名：测试用户</p>
+				<div class="recorderButton">
+					<button class="btn btn-primary" onclick="init(this)">初始化</button>
+					<button class="btn btn-primary" onclick="startRecording(this)">开始录音</button>
+					<button class="btn btn-primary" onclick="stopRecording(this)">停止录音</button>
+				</div>
+				<div class="linkBox">
+					<a href="#" id="back">退出登陆&nbsp;</a>|
+					<a href="#" id="regAcount">注册账号</a>
+				</div>
+			</div>
+			<div class="rightMenu">
+				<ul id="recordingslist">
+				</ul>
+				<pre id="log"></pre>
+				<div id="charts" class="charts"></div>
+			</div>
+		</div>
+		<div class="maskBg"></div>
+		<div class="mask">
+			<div class="login maskItemActive">
+				<h1>登陆</h1>
+				<div class="infoBox">
+					<input class="info" id="userAcount" placeholder="请输入账号" />
+					<input class="info" id="password" type="password" placeholder="请输入密码" />
+				</div>
+				<button class="btn btn-primary infoButton" type="submit" id="login">登陆</button>
+				<div class="linkBox">
+					<a class="infoLink" id="forgetPassword" href="#">忘记密码&nbsp;</a><span>|</span>
+					<a class="infoLink" id="regsiter" href="#regsiter">注册账号</a>
+				</div>
+				<div class="logo">
+					<img src="img/carousel2.png" width="156px" />
+				</div>
+			</div>
+			<div class="regsiter">
+				<h1>注册</h1>
+				<input class="info" id="username" placeholder="请输入用户名" />
+				<input class="info" id="userAcount" placeholder="请输入账号" />
+				<input class="info" type="password" id="password" placeholder="请输入密码" />
+				<input class="info" type="password" id="passwordAgain" placeholder="请输入再次密码" />
+				<input class="info" type="email" id="email" placeholder="请输入邮箱" />
+				<button class="btn btn-primary infoButton" type="submit" id="reg">注册</button><br />
+				<a href="#" id="backLogin">返回登陆</a>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/input.js"></script>
+		<script src="./dist/recorder.js"></script>
+	</body>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/echarts.common.min.js"></script>
+	<script type="text/javascript" src="js/drawCharts.js"></script>
+
+</html>
