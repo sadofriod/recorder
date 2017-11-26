@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var fileUpload = require('express-fileupload');
 var urlencodeParser = bodyParser.urlencoded({extended:true});
 app.use(express.static('C:/Users/79263/Desktop/Recorderjs'));
 app.get('/index.html', function (req, res) {
@@ -32,6 +33,22 @@ app.post('/login',urlencodeParser,function(req,res){
     console.log(response);
     console.log(userdata);
   }
+});
+app.use(fileUpload());
+
+app.post('/upload', function(req, res) {
+  var date = new Date();
+  if(!req.files){
+    return res.status(400);
+  }
+  var sampleFile = req.files;
+  sampleFile.customField.mv("C:/Users/79263/Desktop/Recorderjs/temp/date.wav",function(err){
+    if(err){
+      return res.status(500);
+    }
+  });
+  console.log( sampleFile.customField.data);
+  // sampleFile.customField.mv("C:\Users\79263\Desktop\Recorderjs\temp")
 });
 var server = app.listen(3000, function () {
   var host = server.address().address;

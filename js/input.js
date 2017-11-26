@@ -4,7 +4,6 @@ function __log(e, data) {
 
 var audio_context;
 var recorder;
-
 function startUserMedia(stream) {
 	var input = audio_context.createMediaStreamSource(stream);
 	__log('Media stream created.');
@@ -34,9 +33,27 @@ function stopRecording(button) {
 	createDownloadLink();
 	recorder.clear();
 }
-function upload_file(){
-
+function upload_file(blob){//通过post上传文件
+	var xhr = new XMLHttpRequest();
+	var formData = new FormData();
+	recorder && recorder.exportWAV(function(blob) {
+		var fd =new FormData();
+		fd.append("customField",blob);
+		$.ajax({
+			url:"/upload",
+			type:"POST",
+			data:fd,
+			processData:false,   //  告诉jquery不要处理发送的数据
+			contentType:false    // 告诉jquery不要设置content-Type请求头
+		});
+	});
 }
+// function setProgress(event) {//进度条
+// 	if (event.lengthComputable) {
+// 	  var complete = Number.parseInt(event.loaded / event.total * 100);
+// 	  progress.innerHTML = complete + '%';
+// 	}
+//   }
 function createDownloadLink() {
 	recorder && recorder.exportWAV(function(blob) {
 		var url = URL.createObjectURL(blob);
@@ -44,7 +61,7 @@ function createDownloadLink() {
 		var au = document.createElement('audio');
 		var hf = document.createElement('a');
 		var btn = document.createElement('button');
-		btn.onclick = upload_file();
+		btn.onclick = upload_file(blob);
 		btn.innerHTML = "上传文件";
 		btn.setAttribute('class','btn btn-primary')
 		au.controls = true;
