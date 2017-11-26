@@ -1,0 +1,22 @@
+{
+  "name": "re",
+  "version": "1.0.0",
+  "description": "recorderPorject",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadofriod/recorder.git"
+  },
+  "author": "792634614@qq.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadofriod/recorder/issues"
+  },
+  "homepage": "https://github.com/sadofriod/recorder#readme",
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
+}
