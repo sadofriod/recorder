@@ -34,21 +34,28 @@ function stopRecording(button) {
 	createDownloadLink();
 	recorder.clear();
 }
+function upload_file(){
 
+}
 function createDownloadLink() {
 	recorder && recorder.exportWAV(function(blob) {
 		var url = URL.createObjectURL(blob);
 		var li = document.createElement('li');
 		var au = document.createElement('audio');
 		var hf = document.createElement('a');
-		
+		var btn = document.createElement('button');
+		btn.onclick = upload_file();
+		btn.innerHTML = "上传文件";
+		btn.setAttribute('class','btn btn-primary')
 		au.controls = true;
 		au.src = url;
 		hf.href = url;
-		hf.download = new Date().getUTCDate() + '.wav';
+		var date =  new Date();
+		hf.download = date + '.wav';
 		hf.innerHTML = hf.download;
 		li.appendChild(au);
 		li.appendChild(hf);
+		li.appendChild(btn)
 		recordingslist.appendChild(li);
 	});
 }

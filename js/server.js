@@ -6,7 +6,7 @@ var documentRoot = 'C:/Users/79263/Desktop/Recorderjs';
 var server = http.createServer(function(req,res){
     var fileUrl = req.url;
     var file = documentRoot + fileUrl;
-    console.log(file);
+    // console.log(file);
     var extName = path.extname(file);
     var contentType;
     fs.readFile(file,function(err,data){

@@ -18,5 +18,8 @@
   "homepage": "https://github.com/sadofriod/recorder#readme",
   "devDependencies": {
     "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2"
   }
 }
