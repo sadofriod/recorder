@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fs = require('fs')
 var bodyParser = require('body-parser');
 var fileUpload = require('express-fileupload');
 var urlencodeParser = bodyParser.urlencoded({extended:true});
@@ -34,20 +35,29 @@ app.post('/login',urlencodeParser,function(req,res){
     console.log(userdata);
   }
 });
-app.use(fileUpload());
-
+app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))
 app.post('/upload', function(req, res) {
-  var date = new Date();
+   var date = new Date().toString();
   if(!req.files){
+    console.log("not file");
     return res.status(400);
   }
+  else{
+    console.log("is file");
+  }
   var sampleFile = req.files;
-  sampleFile.customField.mv("C:/Users/79263/Desktop/Recorderjs/temp/date.wav",function(err){
+  // var buff = new Buffer(sampleFile.customField.data.toString());
+  // var   gettype=Object.prototype.toString
+  // var view = encodeWAV(buff);
+  sampleFile.customField.name = date;
+  sampleFile.customField.mv("./temp/sss.wav",function(err){
     if(err){
       return res.status(500);
     }
+    return res.send('success');
   });
-  console.log( sampleFile.customField.data);
+  console.log(sampleFile.customField);
+  return res.status(200);
   // sampleFile.customField.mv("C:\Users\79263\Desktop\Recorderjs\temp")
 });
 var server = app.listen(3000, function () {
