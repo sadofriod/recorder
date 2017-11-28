@@ -43,7 +43,7 @@ function upload_file(blob){//通过post上传文件
 		fd.append("customField",blob);
 		console.log();		
 		// fd.append("data",blob);
-		// fd.append("mimetyoe","audio/wav");
+		fd.append("name",date.toISOString());
 		$.ajax({
 			url:"/upload",
 			type:"POST",

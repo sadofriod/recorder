@@ -1,15 +1,15 @@
-var express = require('express');
+var express = require('express');//erpress 框架引入
 var app = express();
-var fs = require('fs')
-var bodyParser = require('body-parser');
-var fileUpload = require('express-fileupload');
-var urlencodeParser = bodyParser.urlencoded({extended:true});
-app.use(express.static('C:/Users/79263/Desktop/Recorderjs'));
+var fs = require('fs');
+var bodyParser = require('body-parser');//引入body-parser中间件
+var fileUpload = require('express-fileupload');//引入基于express的文件上传
+var urlencodeParser = bodyParser.urlencoded({extended:true});//配置上传的文件类型 当前为任意类型
+app.use(express.static('C:/Users/79263/Desktop/Recorderjs'));//配置服务器本机地址
 app.get('/index.html', function (req, res) {
   res.send(__dirname+"/"+"index.html");
-});
-var userdata;//测试使用本地用户数据
-app.post('/regsiter',urlencodeParser,function(req,res){
+});//默认访问index.html
+var userdata;//测试使用本地用户数据，引入数据库后删除
+app.post('/regsiter',urlencodeParser,function(req,res){//用户注册逻辑
   var response = {
     "userName":req.body.userName,
     "userAccount":req.body.userAccount,
@@ -20,7 +20,7 @@ app.post('/regsiter',urlencodeParser,function(req,res){
   res.end(JSON.stringify(response));
   userdata = JSON.stringify(response);
 });
-app.post('/login',urlencodeParser,function(req,res){
+app.post('/login',urlencodeParser,function(req,res){//用户登陆逻辑
   var response = {
     userAccount:req.body.userAccount,
     password:req.body.password
@@ -35,9 +35,10 @@ app.post('/login',urlencodeParser,function(req,res){
     console.log(userdata);
   }
 });
-app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))
+app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))//配置文件上传中间件
 app.post('/upload', function(req, res) {
-   var date = new Date().toString();
+  var date = new Date();
+  var ud = JSON.parse(userdata)
   if(!req.files){
     console.log("not file");
     return res.status(400);
@@ -46,23 +47,21 @@ app.post('/upload', function(req, res) {
     console.log("is file");
   }
   var sampleFile = req.files;
-  // var buff = new Buffer(sampleFile.customField.data.toString());
-  // var   gettype=Object.prototype.toString
-  // var view = encodeWAV(buff);
-  sampleFile.customField.name = date;
-  sampleFile.customField.mv("./temp/sss.wav",function(err){
+  sampleFile.customField.name = date.toISOString();//为文件命名
+  if(!fs.existsSync("./"+ud.userAccount)){
+    fs.mkdirSync("./"+ud.userAccount)
+  }
+  var path = "./"+ud.userAccount+"/"+date.getFullYear()+"-"+date.getDate()+"-"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+".wav";//文件真实名称
+  req.files.customField.mv(path,function(err){//移动文件至服务器下目录
     if(err){
       return res.status(500);
     }
     return res.send('success');
   });
-  console.log(sampleFile.customField);
   return res.status(200);
-  // sampleFile.customField.mv("C:\Users\79263\Desktop\Recorderjs\temp")
 });
-var server = app.listen(3000, function () {
+var server = app.listen(3000, function () {//启动服务
   var host = server.address().address;
   var port = server.address().port;
-
   console.log('Example app listening at http://%s:%s', host, port);
 });
