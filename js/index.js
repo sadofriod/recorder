@@ -12,8 +12,8 @@ function userInoutValidation(userData){//前端用户输入验证
 }
 $('#login').click(function(){//欢迎页登陆逻辑
 	var userData = {}//获取用户输入
-	userData.password = $('#password').val(),
-	userData.userAccount = $('#userAccount').val()
+	userData.password = $('#password').val();
+	userData.userAccount = $('#userAccount').val();
 	$.post('http://127.0.0.1:3000/login',userData,function(data){//进行数据上传
 		userData = null;
 		if(data.success==1){
@@ -41,10 +41,10 @@ $('#regsiter').click(function(){//欢迎页显示至注册DIV
 $('#reg,#backLogin').click(function(){//返回欢迎页登陆
 	$('.regsiter').addClass('hideThisDiv');
 	var userData = {}
-	userData.userName = $('#username').val(),
-	userData.password = $('#inputPassword').val(),
-	userData.userAccount = $('#userAccount').val(),
-	userData.Email = $('#email').val()
+	userData.userName = $('#username').val();
+	userData.password = $('#inputPassword').val();
+	userData.userAccount = $('#userAccount').val();
+	userData.Email = $('#email').val();
 	setTimeout(function(){
 		$('.regsiter').removeClass('maskItemActive');
 		$('.login').addClass('maskItemActive');

@@ -51,6 +51,7 @@ app.post('/upload', function(req, res) {
   if(!fs.existsSync("./"+ud.userAccount)){
     fs.mkdirSync("./"+ud.userAccount)
   }
+  console.log(sampleFile.customField);
   var path = "./"+ud.userAccount+"/"+date.getFullYear()+"-"+date.getDate()+"-"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+".wav";//文件真实名称
   req.files.customField.mv(path,function(err){//移动文件至服务器下目录
     if(err){
