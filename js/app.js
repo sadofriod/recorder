@@ -4,6 +4,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');//引入body-parser中间件
 var fileUpload = require('express-fileupload');//引入基于express的文件上传
 var urlencodeParser = bodyParser.urlencoded({extended:true});//配置上传的文件类型 当前为任意类型
+
 app.use(express.static('C:/Users/79263/Desktop/Recorderjs'));//配置服务器本机地址
 app.get('/index.html', function (req, res) {
   res.send(__dirname+"/"+"index.html");
@@ -52,11 +53,13 @@ app.post('/upload', function(req, res) {
     fs.mkdirSync("./"+ud.userAccount)
   }
   console.log(sampleFile.customField);
+  wavSolve(res);
   var path = "./"+ud.userAccount+"/"+date.getFullYear()+"-"+date.getDate()+"-"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+".wav";//文件真实名称
   req.files.customField.mv(path,function(err){//移动文件至服务器下目录
     if(err){
       return res.status(500);
     }
+    
     return res.send('success');
   });
   return res.status(200);
@@ -66,3 +69,14 @@ var server = app.listen(3000, function () {//启动服务
   var port = server.address().port;
   console.log('Example app listening at http://%s:%s', host, port);
 });
+function  wavSolve(res){
+  var exec = require('child_process').exec;
+  var exec_path = "java -jar test.jar";
+  var data;
+ exec(exec_path,function(err,stdout,stderr){
+    console.log('sjdhaskhd');
+    console.log(err, stdout, stderr);
+    data = "{ercode:0,errms'"+stdout+"'}"
+  })
+  console.log('ssssss');
+}
