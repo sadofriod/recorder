@@ -1,4 +1,5 @@
 var height = $(window).height();
+var ipAddress = '127.0.0.1'
 $('body').height(height);
 $(window).resize(function() {
 	$('body').height($(window).height());
@@ -18,8 +19,8 @@ $('#login').click(function() { //欢迎页登陆逻辑
 	var userData = {} //获取用户输入
 	userData.password = $('#password').val();
 	userData.userAccount = $('#loginUserAcount').val();
-	$.post('http://127.0.0.1:3000/login', userData, function(data) { //进行数据上传
-		if(JSON.parse(data)[0].success == 1) {
+	$.post('http://'+ipAddress+'/login', userData, function(data) { //进行数据上传
+		if(JSON.parse(data)[0]) {
 			$('.maskBg').addClass('maskClose');
 			$('.login').addClass('closeMaskItem');
 			setTimeout(function() {
@@ -50,7 +51,7 @@ $('#reg').click(function() { //返回欢迎页登陆
 	userData.password = $('#inputPassword').val();
 	userData.userAccount = $('#userAccount').val();
 	userData.Email = $('#email').val();
-	$.post('http://127.0.0.1:3000/regsiter', userData, function(data) {
+	$.post('http://'+ipAddress+'/regsiter', userData, function(data) {
 		userData = null;
 		setTimeout(function() {
 			$('.regsiter').removeClass('maskItemActive');
@@ -96,7 +97,7 @@ window.onload = function() {
 		}
 		$('.continor').removeClass('hideElement');
 		document.querySelector('.mask').style.display = 'none';
-		$.post('http://127.0.0.1:3000/login', {
+		$.post('http://'+ipAddress+'/login', {
 			userAccount: localStorage.userAccount,
 			password: localStorage.password
 		}, function(data) {
@@ -108,21 +109,21 @@ window.onload = function() {
 	$('#isFales,#isTrue').attr('disabled', true);
 }
 $('#isTrue').click(function() {
-	$.post('http://127.0.0.1:3000/updateRecorder', {
+	$.post('http://'+ipAddress+'/updateRecorder', {
 		isTrue: 1
 	}, function(data) {
 
 	});
 });
 $('#isFales').click(function() {
-	$.post('http://127.0.0.1:3000/updateRecorder', {
+	$.post('http://'+ipAddress+'/updateRecorder', {
 		isTrue: -1
 	}, function(data) {
 
 	});
 });
 $('#aFales').click(function() {
-	$.post('http://127.0.0.1:3000/updateRecorder', {
+	$.post('http://'+ipAddress+'/updateRecorder', {
 		isTrue: -1
 	}, function(data) {
 		$('#detailMsak').addClass('hideElement');
@@ -131,7 +132,7 @@ $('#aFales').click(function() {
 
 });
 $('#aTrue').click(function() {
-	$.post('http://127.0.0.1:3000/updateRecorder', {
+	$.post('http://'+ipAddress+'/updateRecorder', {
 		isTrue: 1
 	}, function(data) {
 		$('#detailMsak').addClass('hideElement');

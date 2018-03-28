@@ -12,10 +12,69 @@
 	height: 100%;
 }
 .charts{
-	position: absolute;
 	height: 300px;
-	width: 75%;
-	bottom: 0px;
+	width: 600px;
+}
+.hideElement{
+	display: none;
+}
+#uploadMask,#removeMsak,#detailMsak{
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.85);
+	color: #FFFFFF;
+	z-index: 100;
+}
+.maskContext,.removeMaskContext,.detailMaskContext{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	flex-wrap: wrap;
+}
+.maskContext h1,.maskContext h2{
+	text-align: center;
+	width: 100%;
+	margin-bottom: 20px;
+}
+.removeBox{
+	width: 28%;
+	height: 28%;
+	border-radius: 8px;
+	text-align: center;
+	background-color: #FFFFFF;
+	padding: 10px;
+}
+.removeBox h3{
+	color: #222222;
+	font-family: "微软雅黑";
+	border-bottom: 1px solid rgba(50,50,50,.45);
+	padding-bottom: 8px;
+}
+.detailBox{
+	width: 65%;
+	height: 50%;
+	border-radius: 8px;
+	text-align: center;
+	background-color: #FFFFFF;
+	padding: 10px;
+}
+.detailBox h3{
+	color: #222222;
+	font-family: "微软雅黑";
+	border-bottom: 1px solid rgba(50,50,50,.45);
+	padding-bottom: 8px;
+
+}
+.detailBox h4{
+	color: #222222;
+}
+.detailBox audio{
+	height: 44px !important;
+	width: 150px !important;
 }
 /*登陆注册*/
 .mask{
@@ -41,6 +100,9 @@
 	border-radius: 8px;
 	display: none;
 	text-align: center;
+	min-height: 500px;
+	min-width: 336px;
+	box-shadow: 0px 0px 10px rgba(50,50,50,.35);
 }
 @keyframes hideDiv{
 	from{
@@ -118,7 +180,6 @@
 .maskItemActive h1{
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border-bottom: 1px solid rgba(50,50,50,.35);
 }
 .info{
 	border: 1px solid rgba(50,50,50,.35);
@@ -148,7 +209,6 @@
 	margin-top: 4%;
 }
 .linkBox{
-	margin-top: 4%;
 	width: 100%;
 }
 .logo{
@@ -156,11 +216,16 @@
 	padding: 10px;
 	width: 100%;
 }
+.logo img{
+	border-radius: 50%;
+}
 /*左侧菜单*/
 .leftMenu{
 	width: 25%;
 	height: 100%;
-	position: relative;
+	position: fixed;
+	left: 0px;
+	top: 0px;
 	background-color: #222222;
 	color:#fff;
 	text-align: center;
@@ -194,7 +259,80 @@
 	overflow-y: scroll;
 }
 #recordingslist{
-	max-height: 150px;
+	min-height: 150px;
+	height: 160px;
+	max-height: 180px;
 	overflow-y: auto;
+	border-bottom: 1px solid rgba(50,50,50,.50);
+	margin-bottom: 20px;
 }
-
+/*右侧菜单*/
+.rightMenu{
+	position: fixed;
+	top: 0px;
+}
+.recorderTestBox{
+	margin-top: 41px;
+	display: none;
+}
+.testArea{
+	padding-left: 20px;
+	font-family: "微软雅黑";
+}
+#content p{
+	height: 100px;
+	width: 100%;
+	text-align: center;
+}
+#content img{
+	height: 100px;
+	width: 100%;
+}
+.recordTime{
+	border-bottom: 1px solid rgba(50,50,50,.50);
+	height: 90px;
+	margin-bottom: 20px;
+}
+.recordResult{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150px;
+	font-size: 50px;
+	border-bottom: 1px solid rgba(50,50,50,.50);	
+}
+.judgeBtnBox{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+}
+.judgeBtnBox button{
+	margin: 20px;
+}
+.rightItemActive{
+	display: block !important;
+}
+.chartsBox{
+	display: none;
+	margin-top: 41px;
+	height: 300px;
+}
+.historyList{
+	display: none;
+	margin-top: 41px;
+	height: 100%;
+	padding-left: 20px;
+}
+.historyListItem{
+	float: left;
+	width: 45%;
+	margin: 1%;
+	box-shadow: 0px 0px 5px rgba(50,50,50,.35);
+	padding: 5px;
+	border-radius: 8px;
+}
+.historyListItem button{
+	float: right;
+	margin-right: 8px;
+}

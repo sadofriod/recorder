@@ -3,17 +3,23 @@ var app = express();
 var fs = require('fs');
 var bodyParser = require('body-parser'); //引入body-parser中间件
 var fileUpload = require('express-fileupload'); //引入基于express的文件上传
+// var privateKey = fs.readFileSync('./path/to/private.pem','utf8');
+// var certificate = fs.readFileSync('./path/to/file.crt','utf8');
+// var credentials = {key:privateKey,cert:certificate}
+// var httpsServer = https.createServer(credentials,app);
 var urlencodeParser = bodyParser.urlencoded({
 	extended: true
 }); //配置上传的文件类型 当前为任意类型
 var mysql = require('mysql');
+var ipAddress = '127.0.0.1';
+var staticSource = 'C:/Users/79263/Desktop/recorder/Recorderjs'
 var connection = mysql.createConnection({
 	host: '127.0.0.1',
 	user: 'root',
 	password: '',
 	database: 'student'
 });
-app.use(express.static('C:/Users/79263/Desktop/Recorderjs')); //配置服务器本机地址
+app.use(express.static('C:/Users/79263/Desktop/recorder/Recorderjs')); //配置服务器本机地址
 app.get('/index.html', function(req, res) {
 	res.send(__dirname + "/" + "index.html");
 }); //默认访问index.html
@@ -30,7 +36,7 @@ app.post('/regsiter', urlencodeParser, function(req, res) { //用户注册逻辑
 		if(err) {
 			console.log(err.message);
 		}
-		console.log(JSON.stringify(result));
+		
 		res.json(JSON.stringify(result));
 		return result;
 	});
@@ -46,8 +52,7 @@ app.post('/login', urlencodeParser, function(req, res) { //用户登陆逻辑
 		if(err) {
 			console.log(err.message);
 		}
-		result[0].success = 1;
-		console.log(JSON.stringify(result));
+
 		res.json(JSON.stringify(result));
 		return result;
 	});
@@ -61,7 +66,7 @@ app.post('/upload', function(req, res) {
 	var response = {
 		id: null,
 		recorderFileName: date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ".wav",
-		recorderFilePath: "http://127.0.0.1:3000/js/" + req.body.userAccount + "/" + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ".wav",
+		recorderFilePath: "http://"+ipAddress+"/js/" + req.body.userAccount + "/" + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ".wav",
 		userId: req.body.userAccount
 	}
 	if(!req.files) {
@@ -75,8 +80,6 @@ app.post('/upload', function(req, res) {
 	if(!fs.existsSync("./" + req.body.userAccount)) {
 		fs.mkdirSync("./" + req.body.userAccount)
 	}
-	console.log(sampleFile.customField);
-	console.log(req.body.userAccount);
 	//	wavSolve(res);
 	var path = "./" + req.body.userAccount + "/" + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ".wav"; //文件真实名称
 	req.files.customField.mv(path, function(err) { //移动文件至服务器下目录
@@ -88,11 +91,10 @@ app.post('/upload', function(req, res) {
 		if(err) {
 			console.log(err.message);
 		}
-		console.log(JSON.parse(JSON.stringify(result)).insertId);
-		res.json({
-			"success": 1,
-			"insertId": JSON.parse(JSON.stringify(result)).insertId
-		});
+		// console.log(JSON.parse(JSON.stringify(result)).insertId);
+		console.log(wavSolve(res,result))
+		
+		
 
 		return result;
 	});
@@ -116,26 +118,20 @@ app.post('/uploadImage', urlencodeParser, function(req, res) {
 	} catch(e) {
 		//TODO handle the exception
 	}
-
-	console.log(buf);
-	fs.appendFile('C:/Users/79263/Desktop/Recorderjs/js/temp/' + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + '.txt', imgByte, "base64",function(err) {
+	fs.appendFile('/root/Recorderjs/js/temp/' + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + '.txt', imgByte, "base64",function(err) {
 		if(err) {
 			console.log(err)
 		}
-//		fs.writeFile('C:/Users/79263/Desktop/Recorderjs/js/temp/' + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + '.png', buf, "base64",function(err) {
-//			if(err) {
-//				console.log(err)
-//			}
-//		})
 	})
 	connection.query("insert into image set ?", response, function(err, result) {
 		if(err) {
 			console.log(err.message);
 		}
-		console.log(JSON.stringify(result));
+		
+		
 		res.json({
 			"success": 1,
-			"url": 'C:/Users/79263/Desktop/Recorderjs/js/temp/' + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + '.txt'
+			"url": '/root/Recorderjs/js/temp/' + date.getFullYear() + "-" + date.getDate() + "-" + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + '.txt'
 		});
 		return result;
 	});
@@ -150,7 +146,7 @@ app.post('/updateRecorder', urlencodeParser, function(req, res) {
 		if(err) {
 			console.log(err.message);
 		}
-		console.log(JSON.stringify(result));
+		
 		res.json(JSON.stringify(result));
 		return result;
 	});
@@ -165,20 +161,30 @@ app.post('/selectAllRecorder', urlencodeParser, function(req, res) {
 		return result;
 	});
 });
-var server = app.listen(3000, function() { //启动服务
+var server = app.listen(3000, '0.0.0.0',function() { //启动服务
 	var host = server.address().address;
 	var port = server.address().port;
 	console.log('Example app listening at http://%s:%s', host, port);
 });
+// httpsServer.listen(3001,'0.0.0.0',function(){
+// 	var host = server.address().address;
+// 	var port = server.address().port;
+// 	console.log('Example app listening at http://%s:%s', host, port);
+// })
 
-function wavSolve(res) {
+function wavSolve(res,result) {
 	var exec = require('child_process').exec;
 	var exec_path = "java -jar test.jar";
 	var data;
-	exec(exec_path, function(err, stdout, stderr) {
-		console.log('sjdhaskhd');
-		console.log(err, stdout, stderr);
+	var resultJava = exec(exec_path, function(err, stdout, stderr) {
 		data = "{ercode:0,errms'" + stdout + "'}"
+		// console.log(stdout)
+		res.json({
+			"success": 1,
+			"insertId": JSON.parse(JSON.stringify(result)).insertId,
+			"stdout":stdout,
+		});
 	})
+	// console.log('这是',resultJava.stdout)
 }
 //update recorder,(select id from recorder ORDER BY id desc limt 0,1)temp set isTrue=1 where id= temp.id

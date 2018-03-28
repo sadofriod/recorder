@@ -9,11 +9,17 @@
 			ul {
 				list-style: none;
 			}
-
 			
 			#recordingslist audio {
 				display: block;
 				margin-bottom: 10px;
+			}
+			
+			.rightNav {
+				position: fixed;
+				top: 0px;
+				width: 100%;
+				right: 0px;
 			}
 		</style>
 		<link rel="stylesheet" href="css/index.css" />
@@ -21,7 +27,44 @@
 	</head>
 
 	<body>
-		<div class="continor">
+		<div id="uploadMask" class="hideElement">
+			<div class="maskContext ">
+				<h1 style="font-size: 100px;margin: 0px;">
+						语音翻译中
+				</h1><br />
+				<h2 style="font-size: 150px;margin: 0px;"></h2>
+				<br />
+				<button class="btn btn-success" id="uploadSuccess">未完成</button>
+			</div>
+		</div>
+		<div id="removeMsak" class="hideElement">
+			<div class="removeMaskContext">
+				<div class="removeBox">
+					<h3>确认删除当前文件</h3>
+					<div class="judgeBtnBox">
+						<button id="true" class="btn btn-success">删除</button>
+						<button id="fales" class="btn btn-danger">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="detailMsak" class="hideElement">
+			<div class="detailMaskContext">
+				<div class="detailBox">
+					<h3>文件详情</h3>
+					<h4></h4>
+					<audio controls></audio>
+					<div class="imageBox">
+						<img />
+					</div>
+					<button id="aTrue" class="btn btn-success">正确</button>
+					<button id="aFales" class="btn btn-danger">错误</button>
+					<button id="console" class="btn btn-warning">取消</button>
+				</div>
+			</div>
+		</div>
+		<div class="continor hideElement">
+
 			<div class="leftMenu">
 				<div class="userHeader">
 					<img src="img/125.png" /><br />
@@ -29,8 +72,8 @@
 				<p class="userName">用户名：测试用户</p>
 				<div class="recorderButton">
 					<button class="btn btn-primary" onclick="init(this)">初始化</button>
-					<button class="btn btn-primary" onclick="startRecording(this)">开始录音</button>
-					<button class="btn btn-primary" onclick="stopRecording(this)">停止录音</button>
+					<button id="startRecorder" class="btn btn-primary" onclick="startRecording(this)">开始录音</button>
+					<button id="stopRecorder" class="btn btn-primary" onclick="stopRecording(this)">停止录音</button>
 				</div>
 				<div class="linkBox">
 					<a href="#" id="back">退出登陆&nbsp;</a>|
@@ -38,28 +81,70 @@
 				</div>
 			</div>
 			<div class="rightMenu">
-				<ul id="recordingslist">
+				<ul class="nav nav-tabs rightNav">
+					<li id="test" class="active">
+						<a href="#">测试</a>
+					</li>
+					<li id="count">
+						<a href="#">统计</a>
+					</li>
+					<li id="history">
+						<a href="#">历史</a>
+					</li>
 				</ul>
-				<pre id="log"></pre>
-				<div id="charts" class="charts"></div>
+				<div class="recorderTestBox rightItem rightItemActive" data-test="test">
+					<div class="testArea">
+						<div class="promptBox">
+							<div class="startPrompt">
+								<header>
+									未初始化语音模块请点击初始化
+								</header>
+								<div class="recordTime">
+									<h3>语音时长</h3>
+									<h2>00:00</h2>
+								</div>
+							</div>
+						</div>
+						<div id="recordingslist">
+							语音文件<br /> 未完成语音输入
+						</div>
+						<div id="content" class="recordResult">
+							<p>解析完成完成后在这里查看结果......</p>
+						</div>
+						<div class="judgeBtnBox">
+							<button id="isTrue" class="btn btn-success">正确</button>
+							<button id="isFales" class="btn btn-danger">错误</button>
+						</div>
+					</div>
+				</div>
+				<div class="chartsBox rightItem" data-count="count">
+					<!--<pre id="log"></pre>-->
+					<div id="charts" class="charts"></div>
+				</div>
+				<div class="historyList rightItem" data-history="history">
+					<ul>
+					</ul>
+				</div>
 			</div>
+
 		</div>
-		<div class="maskBg"></div>
+		</div>
 		<div class="mask">
 			<div class="login maskItemActive">
 				<h1>登陆</h1>
 				<div class="infoBox">
-					<input class="info" id="userAcount" placeholder="请输入账号" />
+					<input class="info" id="loginUserAcount" placeholder="请输入账号" />
 					<input class="info" id="password" type="password" placeholder="请输入密码" />
 				</div>
 				<button class="btn btn-primary infoButton" type="submit" id="login">登陆</button>
+				<div class="logo">
+					<img src="img/carousel2.png" width="156px" />
+				</div>
 				<div class="linkBox">
 					<a class="infoLink" id="forgetPassword" href="#">忘记密码&nbsp;</a><span>|</span>
 					<a class="infoLink" id="regsiter" href="#regsiter">注册账号</a>
 				</div>
-				<div class="logo">
-					<img src="img/carousel2.png" width="156px" />
-				</div>
+
 			</div>
 			<div class="regsiter">
 				<h1>注册</h1>
@@ -73,10 +158,10 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/html2canvas.js"></script>
 		<script type="text/javascript" src="js/input.js"></script>
 		<script src="./dist/recorder.js"></script>
 	</body>
-	
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/echarts.common.min.js"></script>
 	<script type="text/javascript" src="js/drawCharts.js"></script>
